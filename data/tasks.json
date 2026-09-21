@@ -1,11 +1,11 @@
 [
   {
-    "id": 1,
-    "title": "Veritabanı Şeması Tasarımı",
-    "description": "Taskflow projesi için temel veri yapıları ve ilişkileri belirlenecek.",
+    "id": 2,
+    "title": "API Dokümantasyonu Hazırlama",
+    "description": "README ve Postman koleksiyonu hazırlanacak",
     "priority": "high",
-    "status": "in-progress",
+    "status": "pending",
     "assignee": "Tolgahan",
-    "createdAt": "2026-09-18T10:00:00.000Z"
+    "createdAt": "2026-09-21T14:30:53.173Z"
   }
 ]
