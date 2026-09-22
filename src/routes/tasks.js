@@ -2,10 +2,32 @@ const express = require('express');
 const router = express.Router();
 const { readTasksFromFile, writeTasksToFile } = require('../utils/fileHelper');
 
-// tüm görevleri listele GET /tasks 
+// tüm görevleri listele veya filtrelere göre getir get task
 router.get('/', (req, res) => {
   try {
-    const tasks = readTasksFromFile();
+    const { status, priority, search } = req.query;
+    let tasks = readTasksFromFile();
+
+    // duruma göre filtreleme ?status=completed 
+    if (status) {
+      tasks = tasks.filter((t) => t.status.toLowerCase() === status.toLowerCase());
+    }
+
+    // önceliğe göre filtreleme ?priority=high
+    if (priority) {
+      tasks = tasks.filter((t) => t.priority.toLowerCase() === priority.toLowerCase());
+    }
+
+    // başlık veya açıklamada metin arama ?search=API
+    if (search) {
+      const searchTerm = search.toLowerCase();
+      tasks = tasks.filter(
+        (t) =>
+          t.title.toLowerCase().includes(searchTerm) ||
+          t.description.toLowerCase().includes(searchTerm)
+      );
+    }
+
     res.status(200).json({
       success: true,
       count: tasks.length,
@@ -14,7 +36,7 @@ router.get('/', (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Görevler okunurken sunucu hatası oluştu.'
+      message: 'Görevler listelenirken sunucu hatası oluştu.'
     });
   }
 });
