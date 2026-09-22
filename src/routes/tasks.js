@@ -1,3 +1,4 @@
+const validateTask = require('../middleware/validateTask');
 const express = require('express');
 const router = express.Router();
 const { readTasksFromFile, writeTasksToFile } = require('../utils/fileHelper');
@@ -76,7 +77,7 @@ router.get('/:id', (req, res) => {
 });
 
 // yeni görev oluşturma POST /tasks - 
-router.post('/', (req, res) => {
+router.post('/', validateTask, (req, res) => {
   try {
     const { title, description, priority, status, assignee } = req.body;
 
@@ -117,7 +118,7 @@ router.post('/', (req, res) => {
 });
 
 //görev bilgilerini güncelle PUT /tasks/:id
-router.put('/:id', (req, res) => {
+router.put('/:id', validateTask, (req, res) => {
   try {
     const taskId = parseInt(req.params.id, 10);
 
