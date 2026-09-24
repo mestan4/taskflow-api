@@ -42,6 +42,48 @@ router.get('/', (req, res) => {
   }
 });
 
+// GET /tasks/stats/summary - görev istatistikleri ve özet veriler sunacağımız yer
+router.get('/stats/summary', (req, res) => {
+  try {
+    const tasks = readTasksFromFile();
+
+    const summary = {
+      totalTasks: tasks.length,
+      statusCounts: {
+        pending: 0,
+        'in-progress': 0,
+        completed: 0
+      },
+      priorityCounts: {
+        low: 0,
+        medium: 0,
+        high: 0
+      }
+    };
+
+    tasks.forEach((t) => {
+      // countları artırma durum
+      if (summary.statusCounts[t.status] !== undefined) {
+        summary.statusCounts[t.status]++;
+      }
+      // countları artırma priority için
+      if (summary.priorityCounts[t.priority] !== undefined) {
+        summary.priorityCounts[t.priority]++;
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      data: summary
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'İstatistikler hesaplanırken sunucu hatası oluştu.'
+    });
+  }
+});
+
 // bbelirli bir görevin detayını getir GET /tasks/:id
 router.get('/:id', (req, res) => {
   try {
