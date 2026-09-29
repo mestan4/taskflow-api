@@ -84,15 +84,16 @@ Sunucu varsayılan olarak http://localhost:3000 adresinde dinlemeye başlar.
 
 ## 📡 API Referansı ve Uç Noktalar
 
-Temel URL: http://localhost:3000/tasks
+Temel URL: `http://localhost:3000/tasks`
 
-| Metot      | Uç Nokta     | Açıklama                             | Beklenen Gövde / Parametre                                     | Durum Kodu                                     |
-| :--------- | :----------- | :----------------------------------- | :------------------------------------------------------------- | :--------------------------------------------- |
-| **GET**    | `/tasks`     | Kayıtlı tüm görevleri listeler       | -                                                              | `200 OK`                                       |
-| **GET**    | `/tasks/:id` | Belirli bir görevin detayını getirir | URL Parametresi (`id`)                                         | `200 OK` / `404 Not Found`                     |
-| **POST**   | `/tasks`     | Yeni bir görev kaydı oluşturur       | JSON: `title`, `description`, `priority`, `status`, `assignee` | `201 Created` / `400 Bad Request`              |
-| **PUT**    | `/tasks/:id` | Görev bilgilerini günceller          | URL Parametresi (`id`), JSON güncelleme alanları               | `200 OK` / `400 Bad Request` / `404 Not Found` |
-| **DELETE** | `/tasks/:id` | Belirli bir görevi sistemden siler   | URL Parametresi (`id`)                                         | `200 OK` / `404 Not Found`                     |
+| Metot | Uç Nokta | Açıklama | Beklenen Gövde / Parametre | Durum Kodu |
+| :--- | :--- | :--- | :--- | :--- |
+| **GET** | `/tasks` | Tüm görevleri listeler veya filtreler | Query: `status`, `priority`, `search` | `200 OK` |
+| **GET** | `/tasks/stats/summary` | Görev istatistikleri ve özet verileri getirir | - | `200 OK` |
+| **GET** | `/tasks/:id` | Belirli bir görevin detayını getirir | URL Parametresi (`id`) | `200 OK` / `404 Not Found` |
+| **POST** | `/tasks` | Yeni bir görev kaydı oluşturur (Doğrulama aktif) | JSON: `title`, `description`, `priority`, `status`, `assignee` | `201 Created` / `400 Bad Request` |
+| **PUT** | `/tasks/:id` | Görev bilgilerini günceller (Doğrulama aktif) | URL Parametresi (`id`), JSON güncelleme alanları | `200 OK` / `400 Bad Request` / `404 Not Found` |
+| **DELETE** | `/tasks/:id` | Belirli bir görevi sistemden siler | URL Parametresi (`id`) | `200 OK` / `404 Not Found` |
 
 ---
 
